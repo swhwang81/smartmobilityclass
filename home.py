@@ -3,16 +3,12 @@ from PIL import Image
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import myfunc as my
 
-def bmi_range(bmi):
-    if bmi>= 25:
-        st.error("비만 입니다!")
-    elif bmi >=23:
-        st.warning('과체중 입니다!')
-    elif bmi >= 18.5:
-        st.success('정상 입니다!')
-    else:
-        st.warning('저체중 입니다!')
+
+st.session_state.id = "황순욱"
+
+st.write(st.session_state.id,"님 반갑습니다!")
 
 
 selected = st.sidebar.selectbox(
@@ -36,7 +32,7 @@ if selected =='체질량 계산기':
 
     if st.button('계산'):
         st.write('당신의 체질량 지수는', round(bmi,2), '입니다.')
-        bmi_range(bmi)
+        my.bmi_range(bmi)
         
         
     image = Image.open('vegetables.jpg')
