@@ -89,8 +89,10 @@ else:
     #st.write(data['continent'].value_counts())
 
     #st.write(data)
-    countries = data['country'].value_counts().index
+    #countries = data['country'].value_counts().index
     #st.write(countries)
+    #st.write(data['country'].unique())
+    countries = data['country'].unique()
     options = st.multiselect(
         'Choose Countries',
         countries,
@@ -115,9 +117,28 @@ else:
     ax1.set_xticks(range(len(data[data['country']==x]['pop'])),data[data['country']==x]['year'])
     ax1.set_title('Life Expectancy')
     st.pyplot(fig1)
-
+    
 
     data2007 = data[data['year']==2007]
+    
+    data2007.reset_index(drop=True, inplace=True)
+    #st.write(data2007)
+    colors =[]
+    for i in range(len(data2007)):
+        colors.append("skyblue")
+    
+    
+    for x in options: 
+        loc = data2007[data2007['country'] == x].index[0]
+        colors[loc] = "red"
+    
     fig0, ax0 = plt.subplots()
-    ax0.scatter(data2007['lifeExp'],data2007['gdpPercap'],s = data2007['pop']*0.000001)
+    ax0.scatter(data2007['lifeExp'],data2007['gdpPercap'],s = data2007['pop']*0.000001, color=colors)
+    
+    for x in options: 
+        loc = data2007[data2007['country'] == x].index[0]
+        ax0.annotate(x,(data2007["lifeExp"][loc],data2007['gdpPercap'][loc]))
+    
     st.pyplot(fig0)
+    
+    #st.write(data2007['gdpPercap'][loc])
